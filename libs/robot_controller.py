@@ -1,4 +1,4 @@
-"""
+b"""
   Library of EV3 robot functions that are useful in many different applications. For example things
   like arm_up, arm_down, driving around, or doing things with the Pixy camera.
 
