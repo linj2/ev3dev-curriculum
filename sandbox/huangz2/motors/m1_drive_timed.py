@@ -63,6 +63,8 @@ import time
 #
 # DONE: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
+
+
 def main():
     print("--------------------------------------------")
     print("  Timed Driving")
@@ -76,8 +78,8 @@ def main():
     assert left_motor.connected
     assert right_motor.connected
 
-    time_s = 1  # Any value other than 0.
-    while time_s != 0:
+    distance = 1  # Any value other than 0.
+    while distance != 0:
         speed = int(input("Enter a speed for the motors (0 to 900 dps): "))
         left_sp = speed
         right_sp = speed
@@ -96,22 +98,24 @@ def main():
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
-    main()
-# TODO: 4. Change the input questions from:
+main()
+
+
+# DONE: 4. Change the input questions from:
 #   Enter a speed for the left motor (0 to 900 dps):
 #   Enter a speed for the right motor (0 to 900 dps):
 #   Enter a time to drive (seconds):
 # to:
 #   Enter a speed (0 to 900 dps):
 #   Distance to travel (inches):
-# TODO: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
+# DONE: 5. Write the code necessary to make the robot drive at that speed going roughly that distance.
 #   Note, in this module, you are REQUIRED to use the pattern...
 #      run_forever()
 #      time.sleep(some_amount)
 #      stop()
 #   You may NOT use the advanced motor commands at this time like: run_to_abs_pos, run_to_rel_pos, or run_timed.
-# TODO: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
-# TODO: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
+# DONE: 6. Modify the program so that it will exit immediately if the answer to   any   question is 0.
+# DONE: 7. Formally test your work. When you think you have the problem complete run these tests to be sure:
 #   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   800 dps 24 inches (make sure it drives within 6 inches of the target distance)
@@ -119,6 +123,6 @@ def main():
 #   400 dps 36 inches (make sure it drives within 9 inches of the target distance)
 # Do more tests if you see fit.  Ideally you should be +/- 25% of the target goal.
 #
-# TODO: 8. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+# DONE: 8. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 #  Observation you should make, the pattern run_forever-->time.sleep-->stop naturally blocks code execution until done.
