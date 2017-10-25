@@ -4,12 +4,43 @@ This module lets you practice using the encoder to determine distances while blo
 
 You will now use a run_to_rel_pos command to implement the action drive inches action.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Jing Lin.
+"""  # TODONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
 
+import ev3dev.ev3 as ev3
+import time
+
+def main():
+    print("--------------------------------------------")
+    print("  Timed Driving")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Timed Driving").wait()
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+
+    distance = 1  # Any value other than 0.
+    while distance != 0:
+        speed = int(input("Enter a speed for the motors (0 to 900 dps): "))
+        left_sp = speed
+        right_sp = speed
+        distance = int(input("Enter a distance to drive (inches): "))
+        time_s = distance / (4/360 * speed)
+        left_motor.run_forever(speed_sp=left_sp)
+        right_motor.run_forever(speed_sp=right_sp)
+        time.sleep(time_s)
+        left_motor.stop()
+        right_motor.stop(stop_action="brake")
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
 # TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
 
