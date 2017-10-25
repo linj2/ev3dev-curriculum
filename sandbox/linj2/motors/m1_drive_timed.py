@@ -58,10 +58,10 @@ Authors: David Fisher and Jing Lin.
 #   Note: To repeat again, in later modules you will learn different (better) ways to travel a given distance using
 #     motor encoders, so just make a simple rough approximation here, since later we'll do it better in a different way.
 ###
-    distance = int(input('please enter a distance that robot will travel in inches'))
-    speed_in_degree = int(input('Please enter a speed in degree'))
-    speed_in_inches = 4/360 * speed_in_degree
-    time = distance / speed_in_inches
+    # distance = int(input('please enter a distance that robot will travel in inches'))
+    # speed_in_degree = int(input('Please enter a speed in degree'))
+    # speed_in_inches = 4/360 * speed_in_degree
+    # time = distance / speed_in_inches
 
 # TODO: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
