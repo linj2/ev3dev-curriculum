@@ -18,6 +18,15 @@ import time
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
-    
-    # TODO: Implement the Snatch3r class as needed when working the sandox exercises
+    def drive_inches(self,distance,speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        left_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed,
+                                  stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed,
+                                   stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    # DONE: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
