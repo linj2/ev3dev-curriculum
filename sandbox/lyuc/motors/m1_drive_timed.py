@@ -10,7 +10,7 @@ Note: If future modules you will learn different (BETTER) ways to drive a given 
 
 Authors: David Fisher and Chengqian Lyu HERE.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
-import ev3dev as ev3
+import ev3dev.ev3 as ev3
 import time
 
 # DONE: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
