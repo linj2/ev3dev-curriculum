@@ -7,7 +7,7 @@ You will now use a run_to_rel_pos command to implement the action drive inches a
 Authors: David Fisher and Jing Lin.
 """  # TODONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
+# TODONE: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
 
 import ev3dev.ev3 as ev3
@@ -33,8 +33,8 @@ def main():
         right_sp = speed
         distance = int(input("Enter a distance to drive (inches): "))
         time_s = distance / (4/360 * speed)
-        left_motor.run_to_rel_pos(position_sp=distance*360/4, speed_sp=speed)
-        right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed)
+        left_motor.run_to_rel_pos(position_sp=distance*360/4, speed_sp=speed,stop_action=ev3.Motor.STOP_ACTION_BRAKE )
+        right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
