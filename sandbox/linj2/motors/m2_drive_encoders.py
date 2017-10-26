@@ -35,15 +35,19 @@ def main():
         time_s = distance / (4/360 * speed)
         left_motor.run_to_rel_pos(position_sp=distance*360/4, speed_sp=speed,stop_action=ev3.Motor.STOP_ACTION_BRAKE )
         right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        ev3.Sound.beep().wait()
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
+main()
+
 # TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
-#   ev3.Sound.beep().wait()
-    ev3.Sound.beep().wait()
+#
+
 # TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
 #   You will need to determine the position_sp value to pass into the run_to_rel_pos command as a named argument.
 #   Assume the diameter of the wheel is 1.3" (close enough).  A 1.3" diameter wheel results in approximately a 4"
