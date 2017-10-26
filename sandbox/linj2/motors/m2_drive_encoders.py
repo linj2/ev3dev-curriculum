@@ -33,8 +33,11 @@ def main():
         right_sp = speed
         distance = int(input("Enter a distance to drive (inches): "))
         time_s = distance / (4/360 * speed)
+        left_motor.run_to_rel_pos(position_sp=distance*360/4, speed_sp=speed)
+        right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         
-
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
