@@ -108,4 +108,5 @@ class Snatch3r(object):
         assert touch_sensor
         arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
         arm_motor.wait_while(ev3.Motor.STATE_HOLDING)
+
         ev3.Sound.beep()
