@@ -63,7 +63,7 @@ def main():
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
     rc1 = ev3.RemoteControl(channel= 1)
     rc1.on_red_up = lambda state: left_motor_drive(state, dc)
-    
+
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
