@@ -61,7 +61,16 @@ def main():
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
+    rc1.on_red_up = lambda state: handle_red_up_1(state)
+    rc1.on_red_down = lambda state: handle_red_down_1(state)
+    rc1.on_blue_up = lambda state: handle_blue_up_1(state)
+    rc1.on_blue_down = lambda state: handle_blue_down_1(state)
 
+    rc2.on_red_up = lambda state: handle_arm_up_button(state,robot)
+    rc2.on_red_down = lambda state: handle_arm_down_button(state,robot)
+    rc2.on_blue_up = lambda  state: handle_calibrate_button(state,robot)
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
@@ -71,6 +80,8 @@ def main():
     while dc.running:
         # TODO: 5. Process the RemoteControl objects.
         btn.process()
+        rc1.process()
+        rc2.process()
         time.sleep(0.01)
 
     # TODO: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
@@ -139,6 +150,45 @@ def handle_shutdown(button_state, dc):
     if button_state:
         dc.running = False
 
+def handle_red_up_1(button_state):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.GREEN)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        left_motor.run_forever(speed_sp = 600)
+    elif not button_state:
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        left_motor.stop(stop_action = ev3.Motor.STOP_ACTION_BRAKE)
+
+def handle_red_down_1(button_state):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        left_motor.run_forever(speed_sp=-600)
+    elif not button_state:
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+def handle_blue_up_1(button_state):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        right_motor.run_forever(speed_sp=600)
+    elif not button_state:
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+        right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+def handle_blue_down_1(button_state):
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        right_motor.run_forever(speed_sp=-600)
+    elif not button_state:
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+        right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
