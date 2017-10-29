@@ -26,7 +26,7 @@
        then print and say Goodbye.  You will need to implement a new robot method called shutdown to handle this task.
 
 Authors: David Fisher and Jing Lin.
-"""  # TODONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -34,7 +34,7 @@ import time
 import robot_controller as robo
 
 # Note that todo2 is farther down in the code.  That method needs to be written before you do todo3.
-# TODO: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
+# TODONE: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 
@@ -61,7 +61,9 @@ def main():
     # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
-
+    rc1 = ev3.RemoteControl(channel= 1)
+    rc1.on_red_up = lambda state: left_motor_drive(state, dc)
+    
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
@@ -73,7 +75,7 @@ def main():
         btn.process()
         time.sleep(0.01)
 
-    # TODO: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
+    # TODONE: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
@@ -86,6 +88,16 @@ def main():
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
 # TODO: 6. Implement the IR handler callbacks handlers.
+def left_motor_drive(button_state,robot):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    assert left_motor.connected
+    if button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        left_motor.run_to_rel_pos(position_sp=600, speed_sp=900)
+    elif not button_state:
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+        left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
 
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
