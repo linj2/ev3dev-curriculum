@@ -26,7 +26,7 @@
        then print and say Goodbye.  You will need to implement a new robot method called shutdown to handle this task.
 
 Authors: David Fisher and Jing Lin.
-"""  # TODONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time

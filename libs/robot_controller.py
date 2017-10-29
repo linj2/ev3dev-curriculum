@@ -39,29 +39,6 @@ class Snatch3r(object):
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
     # DONE: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
-    def drive_inches(self,inches_target, speed_deg_per_second):
-        # Connect two large motors on output ports B and C
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-
-        # Check that the motors are actually connected
-        assert left_motor.connected
-        assert right_motor.connected
-
-        distance = 1  # Any value other than 0.
-        while distance != 0:
-            speed = int(input("Enter a speed for the motors (0 to 900 dps): "))
-            distance = int(input("Enter a distance to drive (inches): "))
-            left_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed,
-                                      stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-            right_motor.run_to_rel_pos(position_sp=distance * 360 / 4, speed_sp=speed,
-                                       stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-            left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-            right_motor.wait_while(ev3.Motor.STATE_RUNNING)
-            ev3.Sound.beep().wait()
-
-        print("Goodbye!")
-        ev3.Sound.speak("Goodbye").wait()
 
     def arm_calibration(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
@@ -110,3 +87,11 @@ class Snatch3r(object):
         arm_motor.wait_while(ev3.Motor.STATE_HOLDING)
 
         ev3.Sound.beep()
+
+    def shutdown(self):
+        btn = ev3.Button()
+        if btn.backspace:
+            ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.GREEN)
+            ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.GREEN)
+            ev3.Sound.speak("Goodbye").wait()
+            print("Goodbye")
