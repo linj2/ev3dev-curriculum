@@ -113,5 +113,47 @@ class Snatch3r(object):
         left_motor.run_forever(speed_sp = left_speed)
         right_motor.run_forever(speed_sp = right_speed)
 
+    def stop(self):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.stop(stop_action = 'brake')
+        right_motor.stop(stop_action = 'brake')
+
     def shut_down(self):
+        # Modify a variable that will allow the loop_forever method to end. Additionally stop motors and set LEDs green.
+        # The most important part of this method is given here, but you should add a bit more to stop motors, etc.
         self.running = False
+
+    def right(self, left_speed, right_speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert left_motor.connected
+        assert right_motor.connected
+
+        left_motor.run_forever(speed_sp=left_speed)
+        right_motor.run_forever(speed_sp= -right_speed)
+
+
+    def left(self, left_speed, right_speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert left_motor.connected
+        assert right_motor.connected
+
+        left_motor.run_forever(speed_sp=-left_speed)
+        right_motor.run_forever(speed_sp=right_speed)
+
+    def backward(self,left_speed, right_speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert left_motor.connected
+        assert right_motor.connected
+
+        left_motor.run_forever(speed_sp=-left_speed)
+        right_motor.run_forever(speed_sp=-right_speed)
