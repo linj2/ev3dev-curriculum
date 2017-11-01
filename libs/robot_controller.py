@@ -113,3 +113,5 @@ class Snatch3r(object):
         left_motor.run_forever(speed_sp = left_speed)
         right_motor.run_forever(speed_sp = right_speed)
 
+    def shut_down(self):
+        self.running = False
