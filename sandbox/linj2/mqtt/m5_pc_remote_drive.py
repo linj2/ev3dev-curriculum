@@ -34,7 +34,9 @@ import mqtt_remote_method_calls as com
 def main():
     # TODO: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
     # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
+
     mqtt_client = com.MqttClient()  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -63,24 +65,32 @@ def main():
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
-    forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
-    root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
+    forward_button['command'] = lambda: forward(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Up>', lambda event: forward(mqtt_client, left_speed_entry, right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
+    left_button['command'] = lambda: left(mqtt_client)
+    root.bind('<Left>', lambda event: left(mqtt_client))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
+    stop_button['command'] = lambda: stop(mqtt_client)
+    root.bind('<space>', lambda event: stop(mqtt_client))
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
     # right_button and '<Right>' key
+    right_button['command'] = lambda: right(mqtt_client)
+    root.bind('<Right>', lambda event: right(mqtt_client))
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=1)
     # back_button and '<Down>' key
+    back_button['command'] = lambda: backward(mqtt_client)
+    root.bind('<Down>', lambda event: backward(mqtt_client))
 
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=5, column=0)
@@ -107,9 +117,28 @@ def main():
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
-# TODO: 4. Implement the functions for the drive button callbacks.
-def drive_forward(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message("")
+# DONE: 4. Implement the functions for the drive button callbacks.
+
+def forward(mqtt_client, left_speed_entry, right_speed_entry):
+    print('drive foward')
+    mqtt_client.send_message("forward",[left_speed_entry.get(),right_speed_entry.get()])
+
+def backward(mqtt_client, left_speed_entry, right_speed_entry):
+    print('drive backward')
+    mqtt_client.send_message("backward",[left_speed_entry.get(),right_speed_entry.get()])
+
+def left(mqtt_client, left_speed_entry, right_speed_entry):
+    print('turn left')
+    mqtt_client.send_message("left",[left_speed_entry.get(),right_speed_entry.get()])
+
+def right(mqtt_client, left_speed_entry, right_speed_entry):
+    print('turn right')
+    mqtt_client.send_message("right",[left_speed_entry.get(),right_speed_entry.get()])
+
+def stop(mqtt_client):
+    print('stop')
+    mqtt_client.send_message("stop")
+
 
 # TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
 #
@@ -122,17 +151,15 @@ def send_up(mqtt_client):
     print("arm_up")
     mqtt_client.send_message("arm_up")
 
-
 def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
 
-
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
-        print("shutdown")
-        mqtt_client.send_message("shutdown")
+        print("shut_down")
+        mqtt_client.send_message("shut_down")
     mqtt_client.close()
     exit()
 
