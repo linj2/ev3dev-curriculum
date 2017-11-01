@@ -72,7 +72,7 @@ class MyDelegate(object):
     def __init__(self):
         self.running = True
 
-    def set_led(self,led_side_string, led_color_string):
+    def set_led(self, led_side_string, led_color_string):
         print("Received: {} {}".format(led_side_string, led_color_string))
         led_side = None
         if led_side_string == "left":
@@ -106,7 +106,7 @@ def main():
     # Note: you can determine the variable names that you should use by looking at the errors underlined in later code.
     # Once you have that done connect the mqtt_client to the MQTT broker using the connect_to_pc method.
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
-    my_delegate = ev3.Snarch3r()
+    my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
 
