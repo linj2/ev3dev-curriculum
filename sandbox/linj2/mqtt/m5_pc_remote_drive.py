@@ -121,19 +121,19 @@ def main():
 
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive foward')
-    mqtt_client.send_message("forward",[left_speed_entry.get(),right_speed_entry.get()])
+    mqtt_client.send_message("forward",[int(left_speed_entry.get()),int(right_speed_entry.get())])
 
 def backward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive backward')
-    mqtt_client.send_message("backward",[left_speed_entry.get(),right_speed_entry.get()])
+    mqtt_client.send_message("backward",[int(left_speed_entry.get()),int(right_speed_entry.get())])
 
 def left(mqtt_client, left_speed_entry, right_speed_entry):
     print('turn left')
-    mqtt_client.send_message("left",[left_speed_entry.get(),right_speed_entry.get()])
+    mqtt_client.send_message("left",[int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 def right(mqtt_client, left_speed_entry, right_speed_entry):
     print('turn right')
-    mqtt_client.send_message("right",[left_speed_entry.get(),right_speed_entry.get()])
+    mqtt_client.send_message("right",[int(left_speed_entry.get()),int(right_speed_entry.get())])
 
 def stop(mqtt_client):
     print('stop')
