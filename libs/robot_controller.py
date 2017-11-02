@@ -27,7 +27,7 @@ class Snatch3r(object):
         assert self.pixy
         assert self.color_sensor
         assert self.ir_sensor
-        
+
     def drive_inches(self,distance,speed):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
