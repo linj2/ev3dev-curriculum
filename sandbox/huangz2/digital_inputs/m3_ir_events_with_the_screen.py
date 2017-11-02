@@ -21,8 +21,8 @@ Which will probably not require you to type the password since sudo was just run
 
 BTW chvt means CHange the Virtual Terminal, and 86ing something means to kick it out.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Zijian Huang.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -74,6 +74,11 @@ def main():
     #   .on_red_down  to call handle_red_down_1  (that exist already) with state and dc as parameters
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
+    cbtn1 = ev3.RemoteControl
+    ev3.RemoteControl.on_red_up = lambda state:handle_red_up_1(state,dc)
+    ev3.RemoteControl.on_red_down = lambda state: handle_red_down_1(state, dc)
+    ev3.RemoteControl.on_blue_up = lambda state: handle_blue_up_1(state, dc)
+    ev3.RemoteControl.on_blue_down = lambda state: handle_blue_down_1(state, dc)
 
     # TODO: 5. Create remote control objects for channels 2, 3, and 4. Add lambda callbacks for on_red_up to each one:
     #   Channel 2's .on_red_up should call handle_red_up_2 (that exist already) with state and dc as parameters
@@ -87,7 +92,7 @@ def main():
     while dc.running:
         # TODO: 4. Call the .process() method on your channel 1 RemoveControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
-
+        ev3.RemoteControl.process()
         # TODO: 6. Call the .process() method on your channel 2 - 4 RemoveControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
 
