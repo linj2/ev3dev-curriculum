@@ -18,6 +18,16 @@ import time
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
+    def __init__(self):
+        self.touch_sensor = ev3.TouchSensor()
+        self.pixy = ev3.Sensor(driver_name="pixy-lego")
+        self.color_sensor = ev3.ColorSensor()
+        self.ir_sensor = ev3.InfraredSensor()
+        assert self.touch_sensor
+        assert self.pixy
+        assert self.color_sensor
+        assert self.ir_sensor
+        
     def drive_inches(self,distance,speed):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
