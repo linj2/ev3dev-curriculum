@@ -145,7 +145,7 @@ class Snatch3r(object):
         assert left_motor.connected
         assert right_motor.connected
 
-        left_motor.run_forever(speed_sp=-(left_speed))
+        left_motor.run_forever(speed_sp=-left_speed)
         right_motor.run_forever(speed_sp=right_speed)
 
     def backward(self,left_speed, right_speed):
