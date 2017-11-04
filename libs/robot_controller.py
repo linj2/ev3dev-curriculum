@@ -167,3 +167,48 @@ class Snatch3r(object):
 
         left_motor.run_forever(speed_sp=-left_speed)
         right_motor.run_forever(speed_sp=-right_speed)
+
+
+    def seek_beacon(self,robot):
+        beacon_seeker = ev3.BeaconSeeker(channel=1)
+
+        forward_speed = 300
+        turn_speed = 100
+
+        while not robot.touch_sensor.is_pressed:
+            # The touch sensor can be used to abort the attempt (sometimes handy during testing)
+
+
+            current_heading = beacon_seeker.heading  # use the beacon_seeker heading
+            current_distance = beacon_seeker.distance  # use the beacon_seeker distance
+            if current_distance == -128:
+                # If the IR Remote is not found just sit idle for this program until it is moved.
+                print("IR Remote not found. Distance is -128")
+                robot.right(turn_speed,turn_speed)
+            else:
+
+
+                # Here is some code to help get you started
+                if math.fabs(current_heading) < 2:
+                    if current_distance == 0:
+                        robot.drive_inches(2.5, 300)
+                        robot.stop()
+                        return True
+                    # Close enough of a heading to move forward
+                    print("On the right heading. Distance: ", current_distance)
+                    # You add more!
+                    if current_distance > 0:
+                        robot.forward(forward_speed, forward_speed)
+
+                if 2 < math.fabs(current_heading) < 10:
+                    if current_heading < 0:
+                        robot.left(turn_speed, turn_speed)
+
+                    if current_heading > 0:
+                        robot.right(turn_speed, turn_speed)
+                if math.fabs(current_heading) > 10:
+                    robot.right(turn_speed,turn_speed)
+                    print('Heading too far off')
+
+
+        time.sleep(0.2)
