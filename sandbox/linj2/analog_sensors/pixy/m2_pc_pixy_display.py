@@ -32,7 +32,6 @@ class MyDelegate(object):
 def main():
     root = tkinter.Tk()
     root.title = "Pixy display"
-
     main_frame = ttk.Frame(root, padding=5)
     main_frame.grid()
 
