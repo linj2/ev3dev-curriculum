@@ -47,9 +47,11 @@ def main():
             robot.right(turn_speed,turn_speed)
         if x > 150 and x < 170:
             robot.stop()
+        if robot.touch_sensor.is_pressed:
+            robot.stop()
+            break
         time.sleep(0.25)
     print("Goodbye!")
-    robot.shutdown()
     ev3.Sound.speak("Goodbye").wait()
 
 # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
