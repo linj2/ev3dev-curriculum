@@ -1,7 +1,9 @@
-import robot_controller as robot
+import robot_controller as robo
 import mqtt_remote_method_calls as com
 import tkinter
 from tkinter import ttk
+import ev3dev.ev3 as ev3
+
 
 
 def main():
@@ -137,5 +139,6 @@ def quit_program(mqtt_client, shutdown_ev3):
         mqtt_client.send_message("shut_down")
     mqtt_client.close()
     exit()
+
 
 main()
