@@ -5,7 +5,7 @@ from tkinter import ttk
 
 
 def main():
-    mqtt_client = com.MqttClient()  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
@@ -26,7 +26,6 @@ def main():
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=1, column=2)
 
-
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
@@ -36,26 +35,25 @@ def main():
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
-    left_button['command'] = lambda: left(mqtt_client,left_speed_entry, right_speed_entry)
-    root.bind('<Left>', lambda event: left(mqtt_client,left_speed_entry, right_speed_entry))
+    left_button['command'] = lambda: left(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Left>', lambda event: left(mqtt_client, left_speed_entry, right_speed_entry))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
-    # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
     stop_button['command'] = lambda: stop(mqtt_client)
     root.bind('<space>', lambda event: stop(mqtt_client))
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
     # right_button and '<Right>' key
-    right_button['command'] = lambda: right(mqtt_client,left_speed_entry, right_speed_entry)
-    root.bind('<Right>', lambda event: right(mqtt_client,left_speed_entry, right_speed_entry))
+    right_button['command'] = lambda: right(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Right>', lambda event: right(mqtt_client, left_speed_entry, right_speed_entry))
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=1)
     # back_button and '<Down>' key
-    back_button['command'] = lambda: backward(mqtt_client,left_speed_entry, right_speed_entry)
-    root.bind('<Down>', lambda event: backward(mqtt_client,left_speed_entry, right_speed_entry))
+    back_button['command'] = lambda: backward(mqtt_client, left_speed_entry, right_speed_entry)
+    root.bind('<Down>', lambda event: backward(mqtt_client, left_speed_entry, right_speed_entry))
 
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=5, column=0)
@@ -67,6 +65,11 @@ def main():
     down_button['command'] = lambda: send_down(mqtt_client)
     root.bind('<j>', lambda event: send_down(mqtt_client))
 
+    way_finding_button = ttk.Button(main_frame, text = 'Way finding')
+    way_finding_button.grid(row = 5, column = 1)
+    way_finding_button['command'] = lambda: way_finding(mqtt_client,left_speed_entry,right_speed_entry)
+    root.bind('<f>',lambda event: way_finding(mqtt_client,left_speed_entry,right_speed_entry))
+
     # Buttons for quit and exit
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=2)
@@ -75,6 +78,10 @@ def main():
     e_button = ttk.Button(main_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
+
+
+    bar = ttk.Scale(main_frame,length = 300, from_ = -900, to = 900)
+    bar.grid(row = 8,column= 0, columnspan = 3)
 
     root.mainloop()
 
@@ -86,39 +93,49 @@ def main():
 
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive foward')
-    mqtt_client.send_message("forward",[int(left_speed_entry.get()),int(right_speed_entry.get())])
+    mqtt_client.send_message("forward", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+
 
 def backward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive backward')
-    mqtt_client.send_message("backward",[int(left_speed_entry.get()),int(right_speed_entry.get())])
+    mqtt_client.send_message("backward", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+
 
 def left(mqtt_client, left_speed_entry, right_speed_entry):
     print('turn left')
-    mqtt_client.send_message("left",[int(left_speed_entry.get()), int(right_speed_entry.get())])
+    mqtt_client.send_message("left", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+
 
 def right(mqtt_client, left_speed_entry, right_speed_entry):
     print('turn right')
-    mqtt_client.send_message("right",[int(left_speed_entry.get()),int(right_speed_entry.get())])
+    mqtt_client.send_message("right", [int(left_speed_entry.get()), int(right_speed_entry.get())])
+
 
 def stop(mqtt_client):
     print('stop')
     mqtt_client.send_message("stop")
 
+def way_finding(mqtt_client, left_speed_entry, right_speed_entry):
+    print('Looking for a path')
+    mqtt_client.send_message("way_finding",[int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 
-# Arm command callbacks
+
 def send_up(mqtt_client):
     print("arm_up")
     mqtt_client.send_message("arm_up")
+
 
 def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
 
-# Quit and Exit button callbacks
+
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
         print("shut_down")
         mqtt_client.send_message("shut_down")
     mqtt_client.close()
     exit()
+
+main()
