@@ -235,3 +235,10 @@ class Snatch3r(object):
         ev3.Sound.speak('stop looking for a path')
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+
+    def play_or_speak(mqtt_client, speak_radio_button, speak_entry, play_radio_button):
+        if speak_radio_button:
+            ev3.Sound.speak('speak: ' + speak_entry.get())
+        if play_radio_button:
+            ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
+
