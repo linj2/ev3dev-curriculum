@@ -50,16 +50,6 @@ def main():
     back_button['command'] = lambda: backward(mqtt_client,left_speed_entry, right_speed_entry)
     root.bind('<Down>', lambda event: backward(mqtt_client,left_speed_entry, right_speed_entry))
 
-    up_button = ttk.Button(main_frame, text="Up")
-    up_button.grid(row=5, column=0)
-    up_button['command'] = lambda: send_up(mqtt_client)
-    root.bind('<u>', lambda event: send_up(mqtt_client))
-
-    down_button = ttk.Button(main_frame, text="Down")
-    down_button.grid(row=6, column=0)
-    down_button['command'] = lambda: send_down(mqtt_client)
-    root.bind('<j>', lambda event: send_down(mqtt_client))
-
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=2)
     q_button['command'] = (lambda: quit_program(mqtt_client, False))
@@ -93,26 +83,11 @@ def stop(mqtt_client):
     print('stop')
     mqtt_client.send_message("stop")
 
-
-# TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
-#
-# Observations you should make, you did basically this same program using the IR Remote, but your computer can be a
-# remote control that can do A LOT more than an IR Remote.  We are just doing the basics here.
-
-
-# Arm command callbacks
-def send_up(mqtt_client):
-    print("arm_up")
-    mqtt_client.send_message("arm_up")
-
-def send_down(mqtt_client):
-    print("arm_down")
-    mqtt_client.send_message("arm_down")
-
-# Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
         print("shut_down")
         mqtt_client.send_message("shut_down")
     mqtt_client.close()
     exit()
+
+main()
