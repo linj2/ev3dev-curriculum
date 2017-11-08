@@ -69,8 +69,8 @@ def main():
 
     way_finding_button = ttk.Button(main_frame, text = 'Way finding')
     way_finding_button.grid(row = 5, column = 1)
-    way_finding_button['command'] = lambda: way_finding(mqtt_client,left_speed_entry,right_speed_entry)
-    root.bind('<f>',lambda event: way_finding(mqtt_client,left_speed_entry,right_speed_entry))
+    way_finding_button['command'] = lambda:way_finding(mqtt_client,bar)
+    root.bind('<f>',lambda event: way_finding(mqtt_client,bar))
 
     # Buttons for quit and exit
     q_button = ttk.Button(main_frame, text="Quit")
@@ -81,9 +81,10 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
-
-    bar = ttk.Scale(main_frame,length = 300, from_ = -900, to = 900)
-    bar.grid(row = 8,column= 0, columnspan = 3)
+    bar_label = ttk.Label(main_frame,text = "speed for way finding")
+    bar_label.grid(row = 7, column = 1)
+    bar = ttk.Scale(main_frame,length = 300, from_ = -900, to = 900, resolution = 2, showvalue = 1)
+    bar.grid(row = 9,column= 0, columnspan = 3)
 
     root.mainloop()
 
@@ -117,9 +118,9 @@ def stop(mqtt_client):
     print('stop')
     mqtt_client.send_message("stop")
 
-def way_finding(mqtt_client, left_speed_entry, right_speed_entry):
+def way_finding(mqtt_client, bar):
     print('Looking for a path')
-    mqtt_client.send_message("way_finding",[int(left_speed_entry.get()), int(right_speed_entry.get())])
+    mqtt_client.send_message("way_finding",[int(bar.get())])
 
 
 

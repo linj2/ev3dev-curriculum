@@ -213,22 +213,23 @@ class Snatch3r(object):
         time.sleep(0.2)
 
 
-    def way_finding(self,left_speed,right_speed):
+    def way_finding(self,speed):
         ev3.Sound.speak('looking for a path')
-        while self.ir_sensor.proximity >= 20:
+        while True:
+
             if self.touch_sensor.is_pressed:
                 break
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-            self.forward(left_speed,right_speed)
-            if self.ir_sensor.proximity < 20:
-                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
-                ev3.Sound.speak("path is blocked")
-                self.stop()
-                self.left(left_speed,right_speed)
-                if self.ir_sensor.proximity >= 20:
+            if self.ir_sensor.proximity >= 15:
+                ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+                ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+                self.forward(speed,speed)
+                if self.ir_sensor.proximity < 15:
                     self.stop()
+                    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+                    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+                    ev3.Sound.speak("path is blocked")
+                    self.turn_degrees(90,speed)
+
                     ev3.Sound.speak('path is clear')
                     continue
         self.stop()
