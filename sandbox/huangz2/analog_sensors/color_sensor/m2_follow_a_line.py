@@ -43,7 +43,7 @@ def main():
             #   self.color_sensor = ev3.ColorSensor()
             #   assert self.color_sensor
             # Then here you can use a command like robot.color_sensor.reflected_light_intensity
-
+            blue_level = robot.color_sensor.reflected_light_intensity
             print("New blue level is {}.".format(blue_level))
         elif command_to_run == 'b':
             print("Calibrate the black light level")
@@ -52,6 +52,7 @@ def main():
             print("New black level is {}.".format(black_level))
         elif command_to_run == 'f':
             print("Follow the line until the touch sensor is pressed.")
+            black_level = robot.color_sensor.reflected_light_intensity
             follow_the_line(robot, blue_level, black_level)
         elif command_to_run == 'q':
             break

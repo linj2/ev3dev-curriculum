@@ -5,19 +5,19 @@ import time
 
 def main():
     robot = robo.Snatch3r()
-    white_level = 50
-    black_level = 40
+    white_level = 1000
+    yellow_level = 1000
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
-    check_the_test(robot, white_level, black_level)
+    check_the_test(robot, white_level, yellow_level)
     robot.loop_forever()
 
 
 
 
-def check_the_test(robot, white_level, black_level):
+def check_the_test(robot, white_level, yellow_level):
     while True:
-        if robot.color_sensor.reflected_light_intensity >= white_level:
+        if robot.color_sensor.reflected_light_intensity == white_level:
             robot.stop()
             ev3.Sound.speak("Test Failed")
         if robot.ir_sensor.proximity == 0:
@@ -27,8 +27,8 @@ def check_the_test(robot, white_level, black_level):
             robot.arm_up()
             robot.turn_degrees(60,200)
             robot.arm_down()
-            robot.turn_degrees(60,200)
-        if robot.color_sensor.reflected_light_intensity <= black_level:
+            robot.turn_degrees(-60,200)
+        if robot.color_sensor.reflected_light_intensity == yellow_level:
             robot.stop()
             ev3.Sound.beep().wait()
             break
