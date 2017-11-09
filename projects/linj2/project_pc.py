@@ -99,8 +99,8 @@ def main():
 
     root.mainloop()
 
-def radiobutton_option(mqtt_client, var,speak_entry):
-    mqtt_client.send_message("play_or_speak", [var, speak_entry.get()])
+def radiobutton_option(mqtt_client, var, speak_entry):
+    mqtt_client.send_message("play_or_speak", [var.get(), speak_entry.get()])
 
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive foward')
