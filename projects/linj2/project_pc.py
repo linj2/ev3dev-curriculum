@@ -80,19 +80,20 @@ def main():
     speak_entry.grid(row=7, column=1, columnspan=2)
 
     var = ttk.IntVar()
-    nothing_rb = ttk.Radiobutton(main_frame, text = "be quiet", variable =var, value=1,
+    # do nothing
+    nothing_rb = ttk.Radiobutton(main_frame, text="be quiet", variable=var, value=1,
                                          command = lambda: radiobutton_option(var))
     nothing_rb.grid(row=8, column=0)
-
-    speak_radio_button = ttk.Radiobutton(main_frame, text = "speak the sentence", variable =var, value=2,
+    # speak
+    speak_radio_button = ttk.Radiobutton(main_frame, text="speak the sentence", variable=var, value=2,
                                          command = lambda: radiobutton_option(var))
     speak_radio_button.grid(row=9, column = 0)
-
-    play_radio_button = ttk.Radiobutton(main_frame, text= "play the music", variable = var, value=3,
+    # play music
+    play_radio_button = ttk.Radiobutton(main_frame, text="play the music", variable=var, value=3,
                                         command=lambda: radiobutton_option(var))
     play_radio_button.grid(row=10,column = 0)
-
-    beep_radio_button = ttk.Radiobutton(main_frame, text= "beep", variable = var, value=4,
+    # beep
+    beep_radio_button = ttk.Radiobutton(main_frame, text="beep", variable=var, value=4,
                                            command=lambda: radiobutton_option(var))
     beep_radio_button.grid(row=11,column =0)
 
