@@ -78,29 +78,36 @@ def main():
     speak_entry = ttk.Entry(main_frame, width=20)
     speak_entry.insert(0, "Hello World") # set default to Hello World!
     speak_entry.grid(row=7, column=1, columnspan=2)
-
-    var = ttk.IntVar()
+    var=tkinter.IntVar()
     # do nothing
     nothing_rb = ttk.Radiobutton(main_frame, text="be quiet", variable=var, value=1,
-                                         command = lambda: radiobutton_option(var))
+                                         command = lambda: radiobutton_option(mqtt_client, var.get(), speak_entry.get()))
     nothing_rb.grid(row=8, column=0)
     # speak
     speak_radio_button = ttk.Radiobutton(main_frame, text="speak the sentence", variable=var, value=2,
-                                         command = lambda: radiobutton_option(var))
+                                         command = lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
     speak_radio_button.grid(row=9, column = 0)
     # play music
     play_radio_button = ttk.Radiobutton(main_frame, text="play the music", variable=var, value=3,
-                                        command=lambda: radiobutton_option(var))
+                                        command=lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
     play_radio_button.grid(row=10,column = 0)
     # beep
     beep_radio_button = ttk.Radiobutton(main_frame, text="beep", variable=var, value=4,
-                                           command=lambda: radiobutton_option(var))
+                                           command=lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
     beep_radio_button.grid(row=11,column =0)
 
     root.mainloop()
 
 def radiobutton_option(mqtt_client, var, speak_entry):
-    mqtt_client.send_message("play_or_speak", [var.get(), speak_entry.get()])
+    if var == 1:
+        print('robot speak nothing')
+    if var == 2:
+        print('speak the sentence')
+    if var == 3:
+        print('play the music')
+    if var == 4:
+        print('beeeeep')
+    mqtt_client.send_message("play_or_speak", [var, speak_entry])
 
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive foward')

@@ -231,8 +231,8 @@ class Snatch3r(object):
 
     def play_or_speak(mqtt_client, var, speak_entry):
         if var == 2:
-            ev3.Sound.speak("speak: " + speak_entry)
+            ev3.Sound.speak(speak_entry)
         if var == 3:
-            ev3.Sound.play("/home/robot/csse120/assets/sounds/juhuatai_pcm.wav")
+            ev3.Sound.play("/home/robot/csse120/assets/sounds/juhuatai_pcm.wav").wait()
         if var == 4:
             ev3.Sound.beep().wait()
