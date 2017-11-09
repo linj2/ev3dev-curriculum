@@ -237,9 +237,10 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
 
-    def play_or_speak(mqtt_client, speak_radio_button, speak_entry, play_radio_button):
-        if speak_radio_button:
-            ev3.Sound.speak('speak: ' + speak_entry.get())
-        if play_radio_button:
-            ev3.Sound.play("/home/robot/csse120/assets/sounds/awesome_pcm.wav")
-
+    def play_or_speak(mqtt_client, var, speak_entry):
+        if var == 2:
+            ev3.Sound.speak("speak: " + speak_entry)
+        if var == 3:
+            ev3.Sound.play("/home/robot/csse120/assets/sounds/juhuatai_pcm.wav")
+        if var == 4:
+            ev3.Sound.beep().wait()

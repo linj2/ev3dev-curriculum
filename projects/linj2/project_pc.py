@@ -30,31 +30,26 @@ def main():
 
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=2)
-    # forward_button and '<Up>' key is done for your here...
     forward_button['command'] = lambda: forward(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Up>', lambda event: forward(mqtt_client, left_speed_entry, right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=1)
-    # left_button and '<Left>' key
     left_button['command'] = lambda: left(mqtt_client,left_speed_entry, right_speed_entry)
     root.bind('<Left>', lambda event: left(mqtt_client,left_speed_entry, right_speed_entry))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=2)
-    # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
     stop_button['command'] = lambda: stop(mqtt_client)
     root.bind('<space>', lambda event: stop(mqtt_client))
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=3)
-    # right_button and '<Right>' key
     right_button['command'] = lambda: right(mqtt_client,left_speed_entry, right_speed_entry)
     root.bind('<Right>', lambda event: right(mqtt_client,left_speed_entry, right_speed_entry))
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=2)
-    # back_button and '<Down>' key
     back_button['command'] = lambda: backward(mqtt_client,left_speed_entry, right_speed_entry)
     root.bind('<Down>', lambda event: backward(mqtt_client,left_speed_entry, right_speed_entry))
 
@@ -77,26 +72,34 @@ def main():
     e_button.grid(row=6, column=3)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
+    # Robot speaks what human input.
     speak_label = ttk.Label(main_frame, text="things you want robot to speak: ")
     speak_label.grid(row=7, column=0)
     speak_entry = ttk.Entry(main_frame, width=20)
-    speak_entry.insert(0, "Hello World")
+    speak_entry.insert(0, "Hello World") # set default to Hello World!
     speak_entry.grid(row=7, column=1, columnspan=2)
 
-    speak_radio_button = ttk.Radiobutton(main_frame, text = "speak the sentence", value=1)
-    speak_radio_button.grid(row=8, column = 0)
+    var = ttk.IntVar()
+    nothing_rb = ttk.Radiobutton(main_frame, text = "be quiet", variable =var, value=1,
+                                         command = lambda: radiobutton_option(var))
+    nothing_rb.grid(row=8, column=0)
 
-    play_radio_button = ttk.Radiobutton(main_frame, text= "play the music", value=2)
-    play_radio_button.grid(row=9,column = 0)
+    speak_radio_button = ttk.Radiobutton(main_frame, text = "speak the sentence", variable =var, value=2,
+                                         command = lambda: radiobutton_option(var))
+    speak_radio_button.grid(row=9, column = 0)
 
-    play_button = ttk.Button(main_frame, text="Speak/Play")
-    play_button.grid(row=9, column=1)
-    play_button['command'] = lambda: play_or_speak(mqtt_client, speak_radio_button, speak_entry, play_radio_button)
+    play_radio_button = ttk.Radiobutton(main_frame, text= "play the music", variable = var, value=3,
+                                        command=lambda: radiobutton_option(var))
+    play_radio_button.grid(row=10,column = 0)
+
+    beep_radio_button = ttk.Radiobutton(main_frame, text= "beep", variable = var, value=4,
+                                           command=lambda: radiobutton_option(var))
+    beep_radio_button.grid(row=11,column =0)
 
     root.mainloop()
 
-def play_or_speak(mqtt_client,speak_radio_button, speak_entry, play_radio_button):
-    mqtt_client.send_message("play_or_speak", [speak_radio_button, speak_entry.get(), play_radio_button])
+def radiobutton_option(mqtt_client, var,speak_entry):
+    mqtt_client.send_message("play_or_speak", [var, speak_entry.get()])
 
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
     print('drive foward')
