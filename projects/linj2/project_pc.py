@@ -10,7 +10,7 @@ def main():
     mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
-    root.title("MQTT Remote")
+    root.title("PC Remote Control")
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
@@ -73,28 +73,34 @@ def main():
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
     # Robot speaks what human input.
-    speak_label = ttk.Label(main_frame, text="things you want robot to speak: ")
-    speak_label.grid(row=7, column=0)
+    speak_label = ttk.Label(main_frame, text="What you want robot to speak: ")
+    speak_label.grid(row=7, column=0,sticky = 'w')
     speak_entry = ttk.Entry(main_frame, width=20)
     speak_entry.insert(0, "Hello World") # set default to Hello World!
-    speak_entry.grid(row=7, column=1, columnspan=2)
+    speak_entry.grid(row=7, column=1, columnspan=2,sticky = 'w')
     var=tkinter.IntVar()
     # do nothing
-    nothing_rb = ttk.Radiobutton(main_frame, text="be quiet", variable=var, value=1,
+    nothing_rb = ttk.Radiobutton(main_frame, text="Be quiet", variable=var, value=1,
                                          command = lambda: radiobutton_option(mqtt_client, var.get(), speak_entry.get()))
-    nothing_rb.grid(row=8, column=0)
+    nothing_rb.grid(row=8, column=0,sticky = 'w')
     # speak
-    speak_radio_button = ttk.Radiobutton(main_frame, text="speak the sentence", variable=var, value=2,
+    speak_radio_button = ttk.Radiobutton(main_frame, text="Speak the sentence", variable=var, value=2,
                                          command = lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
-    speak_radio_button.grid(row=9, column = 0)
+    speak_radio_button.grid(row=9, column = 0,sticky = 'w')
     # play music
-    play_radio_button = ttk.Radiobutton(main_frame, text="play the music", variable=var, value=3,
+    play_radio_button = ttk.Radiobutton(main_frame, text="Play the music", variable=var, value=3,
                                         command=lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
-    play_radio_button.grid(row=10,column = 0)
+    play_radio_button.grid(row=10,column = 0,sticky = 'w')
     # beep
-    beep_radio_button = ttk.Radiobutton(main_frame, text="beep", variable=var, value=4,
+    beep_radio_button = ttk.Radiobutton(main_frame, text="Beep", variable=var, value=4,
                                            command=lambda: radiobutton_option(mqtt_client, var.get(),speak_entry.get()))
-    beep_radio_button.grid(row=11,column =0)
+    beep_radio_button.grid(row=11,column =0,sticky = 'w')
+
+    photo = tkinter.PhotoImage(file='robot_love.GIF')
+
+    button1 = ttk.Button(main_frame, image=photo)
+    button1.image = photo
+    button1.grid(row=0,column=0,rowspan=7)
 
     root.mainloop()
 
