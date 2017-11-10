@@ -12,9 +12,6 @@ def main():
     check_the_test(robot, white_level, yellow_level)
     robot.loop_forever()
 
-
-
-
 def check_the_test(robot, white_level, yellow_level):
     while True:
         if robot.color_sensor.reflected_light_intensity == white_level:
