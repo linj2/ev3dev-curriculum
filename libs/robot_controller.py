@@ -229,7 +229,7 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
 
-    def play_or_speak(mqtt_client, var, speak_entry):
+    def play_or_speak(self, var, speak_entry):
         if var == 2:
             ev3.Sound.speak(speak_entry)
         if var == 3:

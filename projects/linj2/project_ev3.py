@@ -30,7 +30,6 @@ def main():
             robot.forward(mqtt_client, back, back)
         if robot.color_sensor.reflected_light_intensity == black_level:
             follow_the_line(robot, black_level)
-
         time.sleep(0.1)
 
     robot.loop_forever()
