@@ -58,6 +58,11 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
+    bar_label = ttk.Label(main_frame, text="speed for way finding, from 0 - 500")
+    bar_label.grid(row=7, column=1)
+    bar = ttk.Scale(main_frame, length=300, from_=0, to=500)
+    bar.grid(row=9, column=0, columnspan=3)
+
     root.mainloop()
 
 
