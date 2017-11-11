@@ -16,7 +16,7 @@ def main():
         x = robot.pixy.value(1)
         y = robot.pixy.value(2)
         print("(X, Y) = ({},{})".format(x, y))
-        if (x > 0 and y > 0) or robot.ir_sensor.proximity < 10:
+        if (x > 0 and y > 0) and robot.ir_sensor.proximity < 10:
             ev3.Sound.speak("Happy")
             time.sleep(0.5)
             robot.backward(mqtt_client, speed, speed)
@@ -28,8 +28,17 @@ def main():
             robot.left(mqtt_client, back, back)
             robot.right(mqtt_client, speed, speed)
             robot.forward(mqtt_client, back, back)
+        elif robot.ir_sensor.proximity<10:
+            robot.turn_degrees(mqtt_client,300,900)
+            robot.drive_inches(mqtt_client,3,900)
+            robot.turn_degrees(mqtt_client,-300,900)
+            robot.drive_inches(mqtt_client,-3,900)
+
         if robot.color_sensor.reflected_light_intensity == black_level:
             follow_the_line(robot, black_level)
+
+
+
         time.sleep(0.1)
 
     robot.loop_forever()
