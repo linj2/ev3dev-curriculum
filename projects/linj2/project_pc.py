@@ -3,7 +3,6 @@ from tkinter import ttk
 
 import mqtt_remote_method_calls as com
 
-
 def main():
 
     mqtt_client = com.MqttClient()
@@ -98,11 +97,15 @@ def main():
 
     photo = tkinter.PhotoImage(file='robot_love.GIF')
 
-    button1 = ttk.Button(main_frame, image=photo)
+    button1 = ttk.Button(main_frame, image=photo,
+                         command=lambda: action_block(mqtt_client, left_speed_entry, right_speed_entry))
     button1.image = photo
     button1.grid(row=0,column=0,rowspan=7)
 
     root.mainloop()
+def action_block(mqtt_client,left, right):
+    print("gonna hug the block")
+    mqtt_client.send_message("action_block", [int(left.get()),int(right.get())])
 
 def radiobutton_option(mqtt_client, var, speak_entry):
     if var == 1:

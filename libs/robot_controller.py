@@ -14,7 +14,7 @@ b"""
 import ev3dev.ev3 as ev3
 import math
 import time
-
+import random
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
@@ -239,4 +239,18 @@ class Snatch3r(object):
         if var == 3:
             ev3.Sound.play("/home/robot/csse120/assets/sounds/juhuatai_pcm.wav").wait()
         if var == 4:
+            ev3.Sound.beep().wait()
+
+    def action_block(self, left, right):
+        if self.ir_sensor.proximity < 10:
+            ev3.Sound.beep().wait()
+            self.arm_up()
+            self.drive_inches(-3, right)
+            self.turn_degrees(random.randrange(0, 90)*-1, right)
+            self.turn_degrees(random.randrange(0, 90), right)
+            self.turn_degrees(random.randrange(0, 90, 5)*-1, right)
+            self.turn_degrees(random.randrange(0, 90, 5), right)
+            self.drive_inches(3, right)
+            self.arm_down()
+            self.stop()
             ev3.Sound.beep().wait()
